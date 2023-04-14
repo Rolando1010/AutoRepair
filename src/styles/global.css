@@ -4,6 +4,11 @@
     --primary-1: #ED3737;
     --primary-2: #AC2F2F;
     --font-color-1: #FFFFFF;
+    --font-color-2: #b9b9b9;
+}
+
+html {
+    color-scheme: dark;
 }
 
 body {
