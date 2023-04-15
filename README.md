@@ -13,3 +13,4 @@ npm run dev
 
 # Por hacer
 * Crear un layout y ponerle un ancho máximo
+* Hacer bd idempotente
