@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import "src/styles/global.css";
+import "src/views/styles/global.css";
 
 const App = ({ Component, pageProps }: AppProps) => {
 	return (<>

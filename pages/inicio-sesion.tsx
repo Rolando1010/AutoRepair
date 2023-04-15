@@ -1,1 +1,1 @@
-export { default } from "src/user/login";
+export { default } from "src/views/pages/login";

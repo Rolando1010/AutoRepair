@@ -1,1 +1,1 @@
-export { default } from "src/workshop/home";
+export { default } from "src/views/pages/home";
