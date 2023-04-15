@@ -1,7 +1,7 @@
 import { HTMLInputTypeAttribute } from "react";
-import Button from "src/components/button";
-import Navbar from "src/layouts/navbar";
-import WidthLimit from "src/layouts/width-limit";
+import Button from "src/views/components/button";
+import Navbar from "src/views/layouts/navbar";
+import WidthLimit from "src/views/layouts/width-limit";
 
 const Login = () => {
     return (<>

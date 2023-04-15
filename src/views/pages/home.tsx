@@ -1,7 +1,7 @@
-import Button from "src/components/button";
-import { Gutter, GutterContainer } from "src/components/gutters";
-import Navbar from "src/layouts/navbar";
-import WidthLimit from "src/layouts/width-limit";
+import Button from "src/views/components/button";
+import { Gutter, GutterContainer } from "src/views/components/gutters";
+import Navbar from "src/views/layouts/navbar";
+import WidthLimit from "src/views/layouts/width-limit";
 
 const Home = () => {
     return (<>

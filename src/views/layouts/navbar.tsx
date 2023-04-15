@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "src/styles/navbar.module.css";
+import styles from "src/views/styles/navbar.module.css";
 import WidthLimit from "./width-limit";
 
 const Navbar = () => {
