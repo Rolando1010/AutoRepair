@@ -1,0 +1,33 @@
+.navbar {
+    background-color: var(--background-2);
+    padding: 15px;
+}
+
+.navbar div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar h1 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--primary-1);
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 15px;
+}
+
+.navbar a {
+    color: var(--font-color-1);
+    text-decoration: none;
+}
+
+.navbar a:hover, .navbar a:focus {
+    text-decoration: underline;
+}

@@ -1,18 +1,21 @@
+import Button from "src/components/button";
 import { Gutter, GutterContainer } from "src/components/gutters";
+import Navbar from "src/layouts/navbar";
+import WidthLimit from "src/layouts/width-limit";
 
 const Home = () => {
     return (<>
         <Navbar/>
-        <main>
-            <Hero/>
-            <Services/>
-        </main>
+        <WidthLimit>
+            <main>
+                <Hero/>
+                <Services/>
+            </main>
+        </WidthLimit>
         <Footer/>
         <style jsx>{`
             main {
-                max-width: 1000px;
                 padding: 0 25px;
-                margin: auto;
             }
         `}</style>
     </>);
@@ -25,7 +28,7 @@ const Hero = () => {
                 <h2>¡Te <span>conectamos</span> con un <span>taller</span> en minutos!</h2>
                 <div>
                     <p>Por medio de <span>AutoRepair</span> puedes encontrar el taller que se adapte a tus necesidades, como ubicación, presupuesto y tipo de raparación o mantenimiento. Además, podrás dar seguimiento en tiempo real al servicio.</p>
-                    <button>Accede a nuestros servicios</button>
+                    <Button>Accede a nuestros servicios</Button>
                 </div>
             </Gutter>
             <Gutter percentage={50}>
@@ -44,21 +47,6 @@ const Hero = () => {
 
             div {
                 width: 80%;
-            }
-
-            button {
-                background-color: var(--primary-2);
-                border: 0;
-                color: var(--font-color-1);
-                font-size: 16px;
-                padding: 13px 20px;
-                font-size: 18px;
-                border-radius: 10px;
-                cursor: pointer;
-            }
-
-            button:hover, button:focus {
-                background-color: var(--primary-1);
             }
 
             img {
@@ -155,71 +143,23 @@ const ServiceCard = ({ imageURL, title, description }: {
     </>);
 }
 
-const Navbar = () => {
-    return (<>
-        <header>
-            <div>
-                <h1>AutoRepair</h1>
-                <ul>
-                    <li>Cliente</li>
-                    <li>Taller</li>
-                    <li>Soporte</li>
-                </ul>
-            </div>
-        </header>
-        <style jsx>{`
-            header {
-                background-color: var(--background-2);
-                padding: 15px;
-            }
-            
-            div {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                max-width: 1000px;
-                margin: auto;
-            }
-
-            h1 {
-                margin: 0;
-                font-size: 24px;
-                color: var(--primary-1);
-            }
-
-            ul {
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                gap: 15px;
-            }
-        `}</style>
-    </>);
-}
-
 const Footer = () => {
     return (<>
         <footer>
-            <div>
+            <WidthLimit>
                 <h2>Contáctanos</h2>
                 <section>
                     <ContactMethod imageURL="/phone.svg" text="8888-8888"/>
                     <ContactMethod imageURL="/location.svg" text="Urb. Salomé Villareal # 67"/>
                     <ContactMethod imageURL="/email.svg" text="contact@autorepair.com"/>
                 </section>
-            </div>
+            </WidthLimit>
         </footer>
         <style jsx>{`
             footer {
                 background-color: var(--background-2);
                 padding: 15px;
                 box-sizing: border-box;
-            }
-
-            div {
-                max-width: 1000px;
-                margin: auto;
             }
 
             h2 {
