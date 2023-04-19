@@ -20,6 +20,34 @@ CREATE TABLE Tokens (
     FOREIGN KEY(userID) REFERENCES Users(id)
 );
 
+CREATE TABLE States (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+CREATE TABLE Vehicles (
+    id SERIAL PRIMARY KEY,
+    model VARCHAR(100),
+    licensePlate VARCHAR(100),
+    image TEXT,
+    year INT,
+    ownerID INT,
+    FOREIGN KEY (ownerID) REFERENCES Users(id)
+);
+
+CREATE TABLE WorkOrders (
+    id SERIAL PRIMARY KEY,
+    entryDate TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc'),
+    departureDate TIMESTAMP,
+    advicerCreatorID INT,
+    stateID INT,
+    clientID INT,
+    vehicleID INT,
+    FOREIGN KEY (advicerCreatorID) REFERENCES Users(id),
+    FOREIGN KEY (stateID) REFERENCES States(id),
+    FOREIGN KEY (clientID) REFERENCES Users(id)
+);
+
 CREATE OR REPLACE PROCEDURE createUser(
     name VARCHAR(100),
     password VARCHAR(100),
@@ -64,3 +92,26 @@ BEGIN
     RETURN QUERY SELECT usertoken;
 END; $$
 LANGUAGE plpgsql;
+
+CREATE VIEW getWorkOrders AS
+SELECT
+    wo.id,
+    v.image as vehicle_image,
+    v.model,
+    v.licenseplate,
+    s.name as state,
+    wo.entrydate,
+    wo.departuredate,
+    client.name as client,
+    advisor.name as creator
+FROM
+    WorkOrders wo,
+    Vehicles v,
+    States s,
+    Users client,
+    Users advisor
+WHERE
+    wo.vehicleid = v.id AND
+    wo.stateid = s.id AND
+    wo.clientid = client.id AND
+    wo.advicercreatorid = advisor.id

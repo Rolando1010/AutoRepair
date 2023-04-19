@@ -1,18 +1,26 @@
-import { Pool } from "pg";
+import { databaseQuery } from "./database";
 
 const getUserToken = async (name: string, password: string): Promise<string> => {
     return new Promise((resolve, reject) => {
-        const connection = new Pool({connectionString: process.env.DATABASE_CONNECTION_STRING});
-        connection.query(`SELECT generateUserToken('${name}', '${password}')`)
+        databaseQuery(`SELECT generateUserToken('${name}', '${password}')`)
         .then(({ rows }) => {
             const [{ generateusertoken }] = rows;
             resolve(generateusertoken);
         })
         .catch(reject);
-        connection.end();
+    });
+}
+
+const isTokenValid = (authtoken: string) => {
+    return new Promise<boolean>(resolve => {
+        const query = `SELECT id FROM Tokens WHERE token = '${authtoken}'`;
+        databaseQuery(query).then(({ rowCount }) => {
+            resolve(rowCount > 0);
+        });
     });
 }
 
 export {
-    getUserToken
+    getUserToken,
+    isTokenValid
 }
