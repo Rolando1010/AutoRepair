@@ -8,8 +8,8 @@ type WorkOrder = {
         licenseplate: string,
     },
     state: string,
-    entry: Date,
-    departure: Date,
+    entry: string,
+    departure: string,
     client: string,
     advisor: string
 }
@@ -18,19 +18,21 @@ const getWorkOrders = () => {
     return new Promise<WorkOrder[]>(resolve => {
         databaseQuery("SELECT * FROM getWorkOrders")
         .then(({ rows }) => {
-            resolve(rows.map(row => ({
-                id: row.id,
-                vehicle: {
-                    image: row.vehicle_image,
-                    model: row.model,
-                    licenseplate: row.licenseplate
-                },
-                state: row.state,
-                entry: new Date(row.entryDate),
-                departure: new Date(row.departureDate),
-                client: row.client,
-                advisor: row.creator
-            })))
+            resolve(rows.map(row => {
+                return {
+                    id: row.id,
+                    vehicle: {
+                        image: row.vehicle_image,
+                        model: row.model,
+                        licenseplate: row.licenseplate
+                    },
+                    state: row.state,
+                    entry: String(row.entrydate),
+                    departure: String(row.departuredate),
+                    client: row.client,
+                    advisor: row.creator
+                }
+            }));
         });
     });
 }

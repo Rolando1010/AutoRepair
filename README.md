@@ -14,3 +14,4 @@ npm run dev
 # Por hacer
 * Crear un layout y ponerle un ancho máximo
 * Hacer bd idempotente
+* En el modelo de ordenes de trabajo devolver el tipo den entrada y salida de string a date
