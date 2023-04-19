@@ -3,11 +3,12 @@ import Button from "src/views/components/button";
 import Navbar from "src/views/layouts/navbar";
 import WidthLimit from "src/views/layouts/width-limit";
 
-const Login = () => {
+const Login = ({ error }: {error?: string}) => {
     return (<>
         <Navbar/>
         <WidthLimit>
-            <form method="POST" action="/api/login">
+            {error && <p>{error}</p>}
+            <form method="POST" action="/auth/login">
                 <h2>Inicio de Sesión</h2>
                 <LabelInput label="Nombre:" type="text" name="name"/>
                 <LabelInput label="Contraseña:" type="password" name="password"/>
@@ -15,6 +16,18 @@ const Login = () => {
             </form>
         </WidthLimit>
         <style jsx>{`
+            p {
+                margin: 0;
+                text-align: center;
+                background-color: var(--primary-2);
+                width: 80%;
+                margin: 30px auto 0 auto;
+                border-radius: 10px;
+                font-size: 20px;
+                padding: 10px 0;
+                font-weight: bold;
+            }
+
             h2 {
                 margin: 0;
                 color: var(--primary-1);
@@ -29,6 +42,7 @@ const Login = () => {
                 text-align: center;
                 width: 80%;
                 margin: 50px auto 0;
+                box-sizing: border-box;
             }
         `}</style>
     </>);
@@ -41,25 +55,26 @@ const LabelInput = ({ label, type, name }: {label: string, type: HTMLInputTypeAt
             <input type={type} name={name}/>
         </label>
         <style jsx>{`
-            label {
-                display: flex;
-                justify-content: space-between;
-                gap: 10px;
-                margin-bottom: 20px;
-                font-size: 18px;
-            }
-
             span {
                 font-weight: bold;
             }
 
+            label {
+                display: flex;
+                background-color: var(--light-2);
+                font-size: 18px;
+                color: var(--font-color-1);
+                margin-bottom: 20px;
+                gap: 10px;
+            }
+            
             input {
-                flex-grow: 1;
-                border: 0;
+                width: 100%;
                 background-color: transparent;
-                border-bottom: 2px solid var(--font-color-1);
+                border: 0;
                 outline: none;
                 font-size: 18px;
+                border-bottom: 2px solid var(--font-color-1);
                 color: var(--font-color-2);
             }
         `}</style>

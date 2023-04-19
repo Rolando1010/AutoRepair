@@ -1,3 +1,5 @@
+CREATE EXTENSION pgcrypto;
+
 CREATE TABLE Roles (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100) UNIQUE NOT NULL
@@ -31,5 +33,34 @@ BEGIN
         crypt(password, 'autorepair'),
         roleID
     ) RETURNING id INTO userID;
-    INSERT INTO Tokens (token, userid) VALUES (md5(random()::text), userID);
 END;$$
+
+CREATE OR REPLACE FUNCTION generateUserToken(username VARCHAR(100), userpassword VARCHAR(100))
+    RETURNS TABLE(usertoken VARCHAR(100)) AS $$
+DECLARE logUserID INT; usertoken VARCHAR(100);
+BEGIN
+    SELECT Users.id
+    INTO logUserID
+    FROM Users
+    WHERE
+        Users.name = username AND
+        Users.password = crypt(userpassword, 'autorepair');
+
+    IF(logUserID IS NULL) THEN
+        raise exception 'user not found';
+    END IF;
+
+    SELECT Tokens.token
+    INTO usertoken
+    FROM Tokens
+    WHERE Tokens.userID = logUserID;
+
+    IF(usertoken IS NULL) THEN
+        INSERT INTO Tokens (token, userID)
+        VALUES (md5(random()::text), logUserID)
+        RETURNING token INTO usertoken;
+    END IF;
+
+    RETURN QUERY SELECT usertoken;
+END; $$
+LANGUAGE plpgsql;
