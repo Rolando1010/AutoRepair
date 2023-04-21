@@ -39,11 +39,11 @@ CREATE TABLE WorkOrders (
     id SERIAL PRIMARY KEY,
     entryDate TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc'),
     departureDate TIMESTAMP,
-    advicerCreatorID INT,
+    adviserCreatorID INT,
     stateID INT,
     clientID INT,
     vehicleID INT,
-    FOREIGN KEY (advicerCreatorID) REFERENCES Users(id),
+    FOREIGN KEY (adviserCreatorID) REFERENCES Users(id),
     FOREIGN KEY (stateID) REFERENCES States(id),
     FOREIGN KEY (clientID) REFERENCES Users(id)
 );
@@ -103,15 +103,15 @@ SELECT
     wo.entrydate,
     wo.departuredate,
     client.name as client,
-    advisor.name as creator
+    adviser.name as creator
 FROM
     WorkOrders wo,
     Vehicles v,
     States s,
     Users client,
-    Users advisor
+    Users adviser
 WHERE
     wo.vehicleid = v.id AND
     wo.stateid = s.id AND
     wo.clientid = client.id AND
-    wo.advicercreatorid = advisor.id
+    wo.advisercreatorid = adviser.id

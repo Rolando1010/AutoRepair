@@ -2,6 +2,7 @@ import Button from "src/views/components/button";
 import { Gutter, GutterContainer } from "src/views/components/gutters";
 import Navbar from "src/views/layouts/navbar";
 import WidthLimit from "src/views/layouts/width-limit";
+import Point from "../components/point";
 
 const Home = () => {
     return (<>
@@ -57,19 +58,6 @@ const Hero = () => {
         `}</style>
     </>);
 }
-
-const Point = () => <>
-    <span></span>
-    <style jsx>{`
-        span {
-            width: 10px;
-            height: 10px;
-            border-radius: 100%;
-            background-color: var(--primary-1);
-            display: inline-block;
-        }
-    `}</style>
-</>;
 
 const Services = () => {
     return (<>

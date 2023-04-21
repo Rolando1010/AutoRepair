@@ -1,18 +1,5 @@
 import { databaseQuery } from "./database";
-
-type WorkOrder = {
-    id: number,
-    vehicle: {
-        image: string,
-        model: string,
-        licenseplate: string,
-    },
-    state: string,
-    entry: string,
-    departure: string,
-    client: string,
-    advisor: string
-}
+import { type WorkOrder } from "./types";
 
 const getWorkOrders = () => {
     return new Promise<WorkOrder[]>(resolve => {
@@ -27,10 +14,10 @@ const getWorkOrders = () => {
                         licenseplate: row.licenseplate
                     },
                     state: row.state,
-                    entry: String(row.entrydate),
-                    departure: String(row.departuredate),
+                    entry: row.entrydate.toLocaleDateString(),
+                    departure: row.departuredate.toLocaleDateString(),
                     client: row.client,
-                    advisor: row.creator
+                    adviser: row.creator
                 }
             }));
         });
