@@ -1,6 +1,9 @@
-const Button = ({ children }: { children: React.ReactNode }) => {
+const Button = ({ onClick, children }: {
+    onClick?: React.MouseEventHandler<HTMLButtonElement>,
+    children: React.ReactNode
+}) => {
     return (<>
-        <button>{children}</button>
+        <button onClick={onClick}>{children}</button>
         <style jsx>{`
             button {
                 background-color: var(--primary-2);

@@ -2,7 +2,7 @@ const LabelInput = ({ label, type, name, forwardRef }: {
     label: string,
     type: React.HTMLInputTypeAttribute,
     name: string,
-    forwardRef: React.RefObject<HTMLInputElement>
+    forwardRef?: React.RefObject<HTMLInputElement>
 }) => {
     return (<>
         <label>
@@ -38,9 +38,9 @@ const LabelInput = ({ label, type, name, forwardRef }: {
 
 const LabelSelect = ({ label, name, options, forwardRef }: {
     label: string,
-    name: string,
+    name?: string,
     options: {value: string, text: string}[],
-    forwardRef: React.RefObject<HTMLSelectElement>
+    forwardRef?: React.RefObject<HTMLSelectElement>
 }) => {
     return (<>
         <label>

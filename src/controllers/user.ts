@@ -1,5 +1,5 @@
 import { type NextApiRequest, type NextApiResponse } from "next";
-import { createUser } from "src/models/user";
+import { createUser, getClients } from "src/models/user";
 import { setAuthToken, isAPIAuthenticated } from "./auth"
 import { NextContext } from "./types";
 import { parseBody } from "next/dist/server/api-utils/node";
@@ -23,7 +23,13 @@ const signupController = isAPIAuthenticated((request: NextApiRequest, response: 
     return response.status(200).json({success: true});
 });
 
+const clientsController = isAPIAuthenticated(async (request: NextApiRequest, response: NextApiResponse) => {
+    if(request.method !== "GET") return response.status(404).json({success: false});
+    return response.status(200).json(await getClients());
+});
+
 export {
     loginController,
-    signupController
+    signupController,
+    clientsController
 }

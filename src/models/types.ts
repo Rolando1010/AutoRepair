@@ -17,9 +17,14 @@ export type WorkOrder = {
         model: string,
         licenseplate: string,
     },
-    state: State,
+    state: keyof typeof State,
     entry: string,
     departure: string,
     client: string,
     adviser: string
+}
+
+export type User = {
+    id: number,
+    name: string
 }
