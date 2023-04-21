@@ -1,4 +1,3 @@
-import { NextApiRequest } from "next";
 import { NextApiRequestQuery } from "next/dist/server/api-utils";
 
 export const getServerSideProps = ({ query }: {query: NextApiRequestQuery}) => {

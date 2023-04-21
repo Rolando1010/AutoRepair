@@ -4,12 +4,18 @@ import styles from "src/views/styles/workorders.module.css";
 import Navbar from "../layouts/navbar";
 import WidthLimit from "../layouts/width-limit";
 import Point from "../components/point";
+import { AdviserLayout } from "../layouts";
 
 const WorkOrdersList = ({ workorders }: { workorders: WorkOrder[]}) => {
     return (<>
-        <Navbar/>
-        <WidthLimit>
+        <AdviserLayout>
             <h2 className={styles.title}>Lista de reparaciones</h2>
+            <div className={styles.add}>
+                <Link href="/asesor/ordenes-trabajo/crear">
+                    <img src="/add.svg" alt="add"/>
+                    <span>Agregar</span>
+                </Link>
+            </div>
             <ul className={styles.workorders}>
                 {workorders.map((wo, index) =>
                     <Link
@@ -24,10 +30,11 @@ const WorkOrdersList = ({ workorders }: { workorders: WorkOrder[]}) => {
                                 <div>
                                     <h3>{wo.vehicle.model}</h3>
                                     <p>{wo.vehicle.licenseplate}</p>
+                                    <p>{wo.client}</p>
                                 </div>
                             </header>
                             <div>
-                                <h4>{wo.client}</h4>
+                                <h4><span>Creado por:</span> {wo.adviser}</h4>
                                 <p>{wo.entry} - {wo.departure}</p>
                                 <p><Point/> {State[wo.state]}</p>
                             </div>
@@ -35,7 +42,7 @@ const WorkOrdersList = ({ workorders }: { workorders: WorkOrder[]}) => {
                     </Link>
                 )}
             </ul>
-        </WidthLimit>
+        </AdviserLayout>
     </>);
 }
 

@@ -1,5 +1,2 @@
-import { loginController } from "src/controllers/auth";
-
-export const getServerSideProps = loginController;
-
+export { loginController as getServerSideProps } from "src/controllers/user";
 export default () => null;

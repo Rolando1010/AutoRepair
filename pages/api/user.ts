@@ -1,0 +1,1 @@
+export { signupController as default } from "src/controllers/user";

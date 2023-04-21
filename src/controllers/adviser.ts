@@ -6,6 +6,11 @@ const workOrdersController = isAuthenticated(async () => {
     return {props: {workorders}}
 });
 
+const usersController = isAuthenticated(() => {
+    return {props: {}};
+});
+
 export {
-    workOrdersController
+    workOrdersController,
+    usersController
 }

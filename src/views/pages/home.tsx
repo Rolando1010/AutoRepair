@@ -3,16 +3,16 @@ import { Gutter, GutterContainer } from "src/views/components/gutters";
 import Navbar from "src/views/layouts/navbar";
 import WidthLimit from "src/views/layouts/width-limit";
 import Point from "../components/point";
+import { UnsignedLayout } from "../layouts";
 
 const Home = () => {
     return (<>
-        <Navbar/>
-        <WidthLimit>
+        <UnsignedLayout>
             <main>
                 <Hero/>
                 <Services/>
             </main>
-        </WidthLimit>
+        </UnsignedLayout>
         <Footer/>
         <style jsx>{`
             main {

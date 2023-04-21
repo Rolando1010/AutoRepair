@@ -4,6 +4,12 @@ export enum State {
     finished = "Finalizado"
 }
 
+export enum Role {
+    adviser = "Asesor",
+    technician = "Técnico",
+    client = "Cliente"
+}
+
 export type WorkOrder = {
     id: number,
     vehicle: {
@@ -11,7 +17,7 @@ export type WorkOrder = {
         model: string,
         licenseplate: string,
     },
-    state: keyof typeof State,
+    state: State,
     entry: string,
     departure: string,
     client: string,

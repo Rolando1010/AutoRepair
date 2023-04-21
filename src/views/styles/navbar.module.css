@@ -31,3 +31,13 @@
 .navbar a:hover, .navbar a:focus {
     text-decoration: underline;
 }
+
+@media (max-width: 800px){
+    .navbar div {
+        flex-direction: column;
+    }
+
+    .navbar ul {
+        margin-top: 5px;
+    }
+}
