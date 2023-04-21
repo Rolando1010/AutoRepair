@@ -1,13 +1,13 @@
-const LabelInput = ({ label, type, name, ref }: {
+const LabelInput = ({ label, type, name, forwardRef }: {
     label: string,
     type: React.HTMLInputTypeAttribute,
     name: string,
-    ref: React.RefObject<HTMLInputElement>
+    forwardRef: React.RefObject<HTMLInputElement>
 }) => {
     return (<>
         <label>
             <span>{label}:</span>
-            <input type={type} name={name} ref={ref}/>
+            <input type={type} name={name} ref={forwardRef}/>
         </label>
         <style jsx>{`
             span {
@@ -36,16 +36,16 @@ const LabelInput = ({ label, type, name, ref }: {
     </>);
 }
 
-const LabelSelect = ({ label, name, options, ref }: {
+const LabelSelect = ({ label, name, options, forwardRef }: {
     label: string,
     name: string,
     options: {value: string, text: string}[],
-    ref: React.RefObject<HTMLSelectElement>
+    forwardRef: React.RefObject<HTMLSelectElement>
 }) => {
     return (<>
         <label>
             <span>{label}:</span>
-            <select name={name} ref={ref}>
+            <select name={name} ref={forwardRef}>
                 <option disabled>Selecciona una opción</option>
                 {options.map(({value, text}, index) => 
                     <option value={value} key={`select-option-${index}`}>{text}</option>

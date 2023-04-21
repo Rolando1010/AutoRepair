@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { ToastMessages } from "src/views/components/toast";
 import "src/views/styles/global.css";
 
 const App = ({ Component, pageProps }: AppProps) => {
@@ -11,6 +12,7 @@ const App = ({ Component, pageProps }: AppProps) => {
 			<link rel="icon" href="/mechanic.png"/>
 		</Head>
 		<Component {...pageProps}/>
+		<ToastMessages/>
 	</>);
 }
 

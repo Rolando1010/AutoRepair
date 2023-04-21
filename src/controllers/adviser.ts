@@ -1,12 +1,12 @@
-import { getWorkOrders } from "src/models/workorders"
-import { isAuthenticated } from "./auth";
+import { getWorkOrders } from "src/models/workorder"
+import { isViewAuthenticated } from "./auth";
 
-const workOrdersController = isAuthenticated(async () => {
+const workOrdersController = isViewAuthenticated(async () => {
     const workorders = await getWorkOrders();
     return {props: {workorders}}
 });
 
-const usersController = isAuthenticated(() => {
+const usersController = isViewAuthenticated(() => {
     return {props: {}};
 });
 
