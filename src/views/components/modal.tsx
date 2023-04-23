@@ -1,6 +1,7 @@
 import { useState, useEffect, MutableRefObject } from "react";
 import styles from "src/views/styles/modal.module.css";
 import Button from "./button";
+import WidthLimit from "../layouts/width-limit";
 
 const getInititalModalRef = () => ({open: () => {}, close: () => {}});
 
@@ -30,19 +31,21 @@ const Modal = ({ modalRef, title, footer, children }: {
     if(!isOpen) return <></>;
     return (
         <div className={styles.modal}>
-            <section className={styles.dialog}>
-                <header>
-                    {title || <p></p>}
-                    <button onClick={close}>&times;</button>
-                </header>
-                <main>
-                    {children}
-                </main>
-                <footer>
-                    {footer}
-                    <Button onClick={close}>Cerrar</Button>
-                </footer>
-            </section>
+            <WidthLimit>
+                <section className={styles.dialog}>
+                    <header>
+                        {title || <p></p>}
+                        <button onClick={close}>&times;</button>
+                    </header>
+                    <main>
+                        {children}
+                    </main>
+                    <footer>
+                        {footer}
+                        <Button onClick={close}>Cerrar</Button>
+                    </footer>
+                </section>
+            </WidthLimit>
         </div>
     );
 }

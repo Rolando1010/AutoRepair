@@ -1,6 +1,5 @@
 import Button from "src/views/components/button";
 import { Gutter, GutterContainer } from "src/views/components/gutters";
-import Navbar from "src/views/layouts/navbar";
 import WidthLimit from "src/views/layouts/width-limit";
 import Point from "../components/point";
 import { UnsignedLayout } from "../layouts";
@@ -14,11 +13,6 @@ const Home = () => {
             </main>
         </UnsignedLayout>
         <Footer/>
-        <style jsx>{`
-            main {
-                padding: 0 25px;
-            }
-        `}</style>
     </>);
 }
 
@@ -39,6 +33,7 @@ const Hero = () => {
         <style jsx>{`
             h2 {
                 font-size: 30px;
+                margin: 0 0 20px 0;
             }
 
             span {

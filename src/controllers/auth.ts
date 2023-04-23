@@ -1,7 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getCookie, setCookie } from "cookies-next";
-import { parseBody } from "next/dist/server/api-utils/node";
-import { getUserToken, isTokenValid } from "src/models/token";
+import { isTokenValid } from "src/models/token";
 import { NextContext } from "./types";
 
 const AUTH_TOKEN_COOKIE_NAME = "authtoken";

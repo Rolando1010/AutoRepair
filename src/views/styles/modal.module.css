@@ -13,11 +13,9 @@
 
 .modal .dialog {
     background-color: var(--background-1);
-    width: 80%;
-    border-radius: var(--border-radius);
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
-    margin: auto;
 }
 
 .modal header {

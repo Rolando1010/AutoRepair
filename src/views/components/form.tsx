@@ -1,13 +1,20 @@
 import Button from "./button";
 
-const Form = ({ title, children, action, onSubmit }: {
+const Form = ({ title, children, action, setDataOnSubmit }: {
     title: string,
     children: React.ReactNode,
     action?: string,
-    onSubmit?: React.FormEventHandler<HTMLFormElement>
+    setDataOnSubmit?: (data: any, reset: () => void) => void
 }) => {
+    const submit: React.FormEventHandler<HTMLFormElement> = (event) => {
+        event.preventDefault();
+        const { target }: any = event;
+        const data = Object.fromEntries(new FormData(target));
+        setDataOnSubmit && setDataOnSubmit(data, () => target.reset());
+    }
+
     return (<>
-        <form method="POST" action={action} onSubmit={onSubmit}>
+        <form method="POST" action={action} onSubmit={setDataOnSubmit ? submit : undefined}>
             <h2>{title}</h2>
             {children}
             <Button>Enviar</Button>
@@ -25,8 +32,6 @@ const Form = ({ title, children, action, onSubmit }: {
                 border-radius: 10px;
                 padding: 20px 30px;
                 text-align: center;
-                width: 80%;
-                margin: 50px auto 0;
                 box-sizing: border-box;
             }
         `}</style>

@@ -7,6 +7,7 @@ const WidthLimit = ({ children }: {children: React.ReactNode}) => {
             div {
                 max-width: 1000px;
                 margin: auto;
+                padding: 0 15px;
             }
         `}</style>
     </>);

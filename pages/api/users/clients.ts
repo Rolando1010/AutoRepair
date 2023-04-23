@@ -1,1 +1,0 @@
-export { clientsController as default } from "src/controllers/user";

@@ -48,6 +48,19 @@ CREATE TABLE WorkOrders (
     FOREIGN KEY (clientID) REFERENCES Users(id)
 );
 
+CREATE TABLE Tasks (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    description TEXT,
+    day DATE,
+    technicianID INT,
+    workorderID INT,
+    stateID INT,
+    FOREIGN KEY (technicianID) REFERENCES Users(id),
+    FOREIGN KEY (workorderID) REFERENCES WorkOrders(id),
+    FOREIGN KEY (stateID) REFERENCES States(id)
+);
+
 CREATE OR REPLACE PROCEDURE createUser(
     name VARCHAR(100),
     password VARCHAR(100),

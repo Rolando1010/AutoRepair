@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { State, type WorkOrder } from "src/models/types";
 import styles from "src/views/styles/workorders.module.css";
-import Navbar from "../layouts/navbar";
-import WidthLimit from "../layouts/width-limit";
 import Point from "../components/point";
 import { AdviserLayout } from "../layouts";
 

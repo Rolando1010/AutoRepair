@@ -4,11 +4,19 @@ export enum State {
     finished = "Finalizado"
 }
 
-export enum Role {
-    adviser = "Asesor",
-    technician = "Técnico",
-    client = "Cliente"
+export const Roles = {
+    ADVISER: "adviser",
+    TECHNICIAN: "technician",
+    CLIENT: "client"
+} as const
+
+export const RoleValues = {
+    [Roles.ADVISER]: "Asesor",
+    [Roles.TECHNICIAN]: "Técnico",
+    [Roles.CLIENT]: "Cliente"
 }
+
+export type Role = typeof Roles[keyof typeof Roles];
 
 export type WorkOrder = {
     id: number,
