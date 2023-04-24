@@ -1,0 +1,68 @@
+import { Dispatch, SetStateAction, createContext, useContext, useMemo, useState } from "react";
+import { type Task } from "./types";
+
+type WorkOrderData = {
+    clientID: number,
+    vehicle: {
+        model: string,
+        licensePlate: string,
+        image: string,
+        year: number
+    },
+    tasks: Task[]
+}
+
+const INITIAL_STATE: WorkOrderData = {
+    clientID: 0,
+    vehicle: {
+        model: "",
+        licensePlate: "",
+        image: "",
+        year: 0
+    },
+    tasks: []
+};
+
+const workorderContext = createContext<{
+    data: WorkOrderData;
+    setData: Dispatch<SetStateAction<WorkOrderData>>;
+}>({data: INITIAL_STATE, setData: () => {}});
+
+const WorkOrderContext = ({ children }: { children: React.ReactNode }) => {
+    const [data, setData] = useState<WorkOrderData>(INITIAL_STATE);
+    const valueData = useMemo(() => ({ data, setData }), [data]);
+
+    return (
+        <workorderContext.Provider value={valueData}>
+            {children}
+        </workorderContext.Provider>
+    );
+}
+
+const useWorkOrderCreation = () => {
+    const { data, setData } = useContext(workorderContext);
+    
+    const setClient = (clientID: number) => {
+        setData({...data, clientID});
+    }
+
+    const setVehicle = (key: keyof WorkOrderData["vehicle"], value: string | number) => {
+        setData({...data, vehicle: {...data.vehicle, [key]: value}});
+    }
+
+    const addTask = (task: Task) => {
+        setData({...data, tasks: [...data.tasks, task]});
+    }
+    
+    return {
+        setClient,
+        setVehicle,
+        tasks: data.tasks,
+        addTask
+    }
+}
+
+export {
+    WorkOrderContext,
+    useWorkOrderCreation
+}

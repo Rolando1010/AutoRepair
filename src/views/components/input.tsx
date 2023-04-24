@@ -31,14 +31,12 @@ const DEFAULT_INPUT_STYLES = `
     color: var(--font-color-2);
 `;
 
-const LabelInput = ({ label, type, name, ...props }: {
+const LabelInput = ({ label, ...props }: {
     label: string,
-    type: React.HTMLInputTypeAttribute,
-    name?: string
 } & React.InputHTMLAttributes<HTMLInputElement>) => {
     return (<>
         <LabelContainer label={label}>
-            <input type={type} name={name} {...props}/>
+            <input {...props}/>
         </LabelContainer>
         <style jsx>{`            
             input {
@@ -48,14 +46,13 @@ const LabelInput = ({ label, type, name, ...props }: {
     </>);
 }
 
-const LabelSelect = ({ label, name, options }: {
+const LabelSelect = ({ label, options, ...props }: {
     label: string,
-    name?: string,
-    options: {value: string, text: string}[]
-}) => {
+    options: {value: string, text: string}[],
+} & React.SelectHTMLAttributes<HTMLSelectElement>) => {
     return (<>
         <LabelContainer label={label}>
-            <select name={name}>
+            <select {...props}>
                 <option disabled selected value="">Selecciona una opción</option>
                 {options.map(({value, text}, index) => 
                     <option value={value} key={`select-option-${index}`}>{text}</option>
@@ -75,13 +72,12 @@ const LabelSelect = ({ label, name, options }: {
     </>);
 }
 
-const LabelTextArea = ({ label, name }: {
+const LabelTextArea = ({ label, ...props }: {
     label: string,
-    name: string
-}) => {
+} & React.TextareaHTMLAttributes<HTMLTextAreaElement>) => {
     return (<>
         <LabelContainer label={label}>
-            <textarea name={name}></textarea>
+            <textarea {...props}></textarea>
         </LabelContainer>
         <style jsx>{`
             textarea {
