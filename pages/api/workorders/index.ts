@@ -1,0 +1,1 @@
+export { workordersController as default } from "src/controllers/workorders";

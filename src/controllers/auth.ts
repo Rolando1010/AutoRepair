@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getCookie, setCookie } from "cookies-next";
 import { isTokenValid } from "src/models/token";
 import { NextContext } from "./types";
+import { type User } from "src/models/types";
 
 const AUTH_TOKEN_COOKIE_NAME = "authtoken";
 
@@ -20,17 +21,19 @@ const validateToken = async (request: NextApiRequest) => {
 }
 
 const isViewAuthenticated = (
-    controller: (context: NextContext) => any
+    controller: (context: NextContext, user: User) => any
 ) => async (context: NextContext) => {
-    const { req: request, res: response } = context;
-    if (await validateToken(request)) return controller(context);
+    const { req: request } = context;
+    const user = await validateToken(request);
+    if (user) return controller(context, user);
     return {redirect: {destination: "/inicio-sesion"}};
 }
 
 const isAPIAuthenticated = (
-    controller: (request: NextApiRequest, response: NextApiResponse) => any
+    controller: (request: NextApiRequest, response: NextApiResponse, user: User) => any
 ) => async (request: NextApiRequest, response: NextApiResponse) => {
-    if (await validateToken(request)) return controller(request, response);
+    const user = await validateToken(request);
+    if (user) return controller(request, response, user);
     return response.status(401).json({success: false});
 }
 

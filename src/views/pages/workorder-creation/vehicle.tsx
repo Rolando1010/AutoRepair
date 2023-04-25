@@ -15,7 +15,7 @@ const Vehicle = () => {
             <LabelInput
                 label="Placa"
                 type="text"
-                onChange={event => setVehicle("licensePlate", event.target.value)}
+                onChange={event => setVehicle("licenseplate", event.target.value)}
             />
             <LabelInput
                 label="Foto"
@@ -28,7 +28,7 @@ const Vehicle = () => {
                 min="1900"
                 max="2099"
                 step="1"
-                onChange={event => setVehicle("licensePlate", event.target.value)}
+                onChange={event => setVehicle("year", event.target.value)}
             />
         </Container>
     </>);

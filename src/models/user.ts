@@ -1,13 +1,13 @@
-import { databaseQuery } from "./database";
-import { Role, Roles, type User } from "./types";
+import { queryDatabase } from "./database";
+import { Role, type User } from "./types";
 
 const createUser = (name: string, password: string, role: Role) => {
-    databaseQuery(`CALL createUser('${name}', '${password}', '${role}')`);
+    queryDatabase(`CALL createUser('${name}', '${password}', '${role}')`);
 }
 
 const getUserByRoles = (roles: Role[]): Promise<User[]> => {
     return new Promise(resolve => {
-        databaseQuery(`
+        queryDatabase(`
             SELECT u.id, u.name, r.name as role
             FROM Users u, Roles r
             WHERE u.roleID = r.id AND r.name IN ('${roles.join("','")}')

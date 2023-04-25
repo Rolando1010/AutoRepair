@@ -128,3 +128,20 @@ WHERE
     wo.stateid = s.id AND
     wo.clientid = client.id AND
     wo.advisercreatorid = adviser.id
+
+CREATE OR REPLACE FUNCTION createVehicle(
+    model VARCHAR(100),
+    licensePlate VARCHAR(100),
+    image TEXT,
+    year INT,
+    clientOwnerID INT
+) RETURNS INT AS $$
+DECLARE vehicleID INT;
+BEGIN
+    INSERT INTO Vehicles(model, licensePlate, image, year, ownerID)
+    VALUES (model, licensePlate, image, year, clientOwnerID)
+    RETURNING id INTO vehicleID;
+
+    RETURN vehicleID;
+END; $$
+LANGUAGE plpgsql;

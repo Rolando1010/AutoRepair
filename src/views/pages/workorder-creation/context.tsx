@@ -1,14 +1,9 @@
 import { Dispatch, SetStateAction, createContext, useContext, useMemo, useState } from "react";
-import { type Task } from "./types";
+import { type Vehicle, type Task } from "src/models/types";
 
 type WorkOrderData = {
     clientID: number,
-    vehicle: {
-        model: string,
-        licensePlate: string,
-        image: string,
-        year: number
-    },
+    vehicle: Vehicle,
     tasks: Task[]
 }
 
@@ -16,7 +11,7 @@ const INITIAL_STATE: WorkOrderData = {
     clientID: 0,
     vehicle: {
         model: "",
-        licensePlate: "",
+        licenseplate: "",
         image: "",
         year: 0
     },

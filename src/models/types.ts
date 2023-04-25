@@ -18,13 +18,16 @@ export const RoleValues = {
 
 export type Role = typeof Roles[keyof typeof Roles];
 
+export type Vehicle = {
+    model: string,
+    licenseplate: string,
+    image: string,
+    year?: number
+};
+
 export type WorkOrder = {
     id: number,
-    vehicle: {
-        image: string,
-        model: string,
-        licenseplate: string,
-    },
+    vehicle: Vehicle,
     state: keyof typeof State,
     entry: string,
     departure: string,
@@ -36,3 +39,10 @@ export type User = {
     id: number,
     name: string
 }
+
+export type Task = {
+    name: string,
+    description: string,
+    day: Date,
+    technician: User
+};

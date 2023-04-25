@@ -1,9 +1,9 @@
-import { databaseQuery } from "./database";
-import { type WorkOrder } from "./types";
+import { connectDatabase, queryDatabase } from "./database";
+import { Task, Vehicle, type WorkOrder } from "./types";
 
 const getWorkOrders = () => {
     return new Promise<WorkOrder[]>(resolve => {
-        databaseQuery("SELECT * FROM getWorkOrders")
+        queryDatabase("SELECT * FROM getWorkOrders")
         .then(({ rows }) => {
             resolve(rows.map(row => {
                 return {
@@ -24,6 +24,26 @@ const getWorkOrders = () => {
     });
 }
 
+// Crear orden de trabajo
+// Guardar tareas
+
+const saveWorkorder = (advicerID: number, clientID: number, vehicle: Vehicle, tasks: Task[]) => {
+    return new Promise(resolve => {
+        connectDatabase(async connection => {
+            const { rows } = await connection.query(`SELECT createVehicle(
+                '${vehicle.model}',
+                '${vehicle.licenseplate}',
+                '${vehicle.image}',
+                ${vehicle.year},
+                ${clientID}
+            )`);
+            const [{ createvehicle: vehicleID }] = rows;
+            connection.end();
+        });
+    });
+}
+
 export {
+    saveWorkorder,
     getWorkOrders
 }

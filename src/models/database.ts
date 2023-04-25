@@ -1,13 +1,23 @@
 import { Pool, QueryResult } from "pg";
 
-const databaseQuery = (query: string) => {
+const connectDatabase = (callback: (connection: Pool) => void) => {
+    const connection = new Pool({connectionString: process.env.DATABASE_CONNECTION_STRING});
+    callback(connection);
+}
+
+const queryDatabase = (query: string) => {
     return new Promise<QueryResult<any>>((resolve, reject) => {
-        const connection = new Pool({connectionString: process.env.DATABASE_CONNECTION_STRING});
-        connection.query(query).then(resolve).catch(reject);
-        connection.end();
+        connectDatabase(connection => {
+            connection
+                .query(query)
+                .then(resolve)
+                .catch(reject)
+                .finally(() => connection.end());
+        });
     });
 }
 
 export {
-    databaseQuery
+    connectDatabase,
+    queryDatabase
 }

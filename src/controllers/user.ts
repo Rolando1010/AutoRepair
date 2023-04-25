@@ -1,4 +1,3 @@
-import { type NextApiRequest, type NextApiResponse } from "next";
 import { createUser, getUserByRoles } from "src/models/user";
 import { setAuthToken, isAPIAuthenticated } from "./auth"
 import { NextContext } from "./types";
@@ -17,17 +16,14 @@ const loginController = async ({ req: request, res: response }: NextContext) => 
     }
 }
 
-const signupController = isAPIAuthenticated((request: NextApiRequest, response: NextApiResponse) => {
+const signupController = isAPIAuthenticated((request, response) => {
     if(request.method !== "POST") return response.status(404).json({success: false});
     const {name, password, role} = request.body;
     createUser(name, password, role);
     return response.status(200).json({success: true});
 });
 
-const clientsAndTechniciansController = isAPIAuthenticated(async (
-    request: NextApiRequest,
-    response: NextApiResponse
-) => {
+const clientsAndTechniciansController = isAPIAuthenticated(async (request, response) => {
     if(request.method !== "GET") return response.status(404).json({success: false});
     return response.status(200).json(await getUserByRoles([Roles.TECHNICIAN, Roles.CLIENT]));
 });
