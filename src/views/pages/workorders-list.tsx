@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { State, type WorkOrder } from "src/models/types";
+import { StateValues, type WorkOrder } from "src/models/types";
 import styles from "src/views/styles/workorders.module.css";
 import Point from "../components/point";
 import { AdviserLayout } from "../layouts";
@@ -34,7 +34,7 @@ const WorkOrdersList = ({ workorders }: { workorders: WorkOrder[]}) => {
                             <div>
                                 <h4><span>Creado por:</span> {wo.adviser}</h4>
                                 <p>{wo.entry} - {wo.departure}</p>
-                                <p><Point/> {State[wo.state]}</p>
+                                <p><Point/> {StateValues[wo.state]}</p>
                             </div>
                         </li>
                     </Link>

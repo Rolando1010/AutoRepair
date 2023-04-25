@@ -1,5 +1,5 @@
 import { connectDatabase, queryDatabase } from "./database";
-import { Task, Vehicle, type WorkOrder } from "./types";
+import { States, Task, Vehicle, type WorkOrder } from "./types";
 
 const getWorkOrders = () => {
     return new Promise<WorkOrder[]>(resolve => {
@@ -15,7 +15,7 @@ const getWorkOrders = () => {
                     },
                     state: row.state,
                     entry: row.entrydate.toLocaleDateString(),
-                    departure: row.departuredate.toLocaleDateString(),
+                    departure: row.departuredate ? row.departuredate.toLocaleDateString() : "Ahora",
                     client: row.client,
                     adviser: row.creator
                 }
@@ -24,21 +24,46 @@ const getWorkOrders = () => {
     });
 }
 
-// Crear orden de trabajo
-// Guardar tareas
-
 const saveWorkorder = (advicerID: number, clientID: number, vehicle: Vehicle, tasks: Task[]) => {
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
         connectDatabase(async connection => {
-            const { rows } = await connection.query(`SELECT createVehicle(
+            const { rows: vehicleRows } = await connection.query(`SELECT createVehicle(
                 '${vehicle.model}',
                 '${vehicle.licenseplate}',
                 '${vehicle.image}',
                 ${vehicle.year},
                 ${clientID}
             )`);
-            const [{ createvehicle: vehicleID }] = rows;
-            connection.end();
+            const [{ createvehicle: vehicleID }] = vehicleRows;
+
+            const { rows: workorderRows } = await connection.query(`SELECT createWorkOrder(
+                ${advicerID},
+                ${clientID},
+                ${vehicleID}
+            );`);
+            const [{ createworkorder: workorderID }] = workorderRows;
+
+            const { rows: stateRows } = await connection.query(`
+                SELECT id
+                FROM States
+                WHERE name = '${States.PENDING}';
+            `);
+            const [{ id: stateID }] = stateRows;
+
+            const insertionTasksQuery = tasks.map(t => `
+                INSERT INTO Tasks(name, description, day, technicianID, workorderID, stateID)
+                VALUES (
+                    '${t.name}',
+                    '${t.description}',
+                    '${t.day.toISOString()}',
+                    ${t.technician.id},
+                    ${workorderID},
+                    ${stateID}
+                );
+            `).join("/n");
+            await connection.query(insertionTasksQuery);
+            await connection.end();
+            resolve();
         });
     });
 }

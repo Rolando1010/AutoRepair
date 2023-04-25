@@ -145,3 +145,23 @@ BEGIN
     RETURN vehicleID;
 END; $$
 LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION createWorkOrder(
+    adviserCreatorID INT,
+    clientID INT,
+    vehicleID INT
+) RETURNS INT AS $$
+DECLARE workorderID INT; pendingStateID INT;
+BEGIN
+    SELECT id
+    INTO pendingStateID
+    FROM States
+    WHERE name = 'pending';
+
+    INSERT INTO WorkOrders(departureDate, adviserCreatorID, stateID, clientID, vehicleID)
+    VALUES (NULL, adviserCreatorID, pendingStateID, clientID, vehicleID)
+    RETURNING id INTO workorderID;
+
+    RETURN workorderID;
+END; $$
+LANGUAGE plpgsql;

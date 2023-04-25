@@ -1,11 +1,10 @@
 import { useRef } from "react";
-import { User } from "src/models/types";
+import { type Task, type User } from "src/models/types";
 import Modal, { getInititalModalRef } from "src/views/components/modal";
 import Container from "./container";
 import Button from "src/views/components/button";
 import Form from "src/views/components/form";
 import { LabelInput, LabelSelect, LabelTextArea } from "src/views/components/input";
-import { Task } from "./types";
 import { useWorkOrderCreation } from "./context";
 
 const Tasks = ({ technicians }: {technicians: User[]}) => {

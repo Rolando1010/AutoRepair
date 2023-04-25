@@ -1,5 +1,8 @@
+import { useRouter } from "next/router";
 import { Dispatch, SetStateAction, createContext, useContext, useMemo, useState } from "react";
 import { type Vehicle, type Task } from "src/models/types";
+import toast from "src/views/components/toast";
+import requests from "src/views/utils/requests";
 
 type WorkOrderData = {
     clientID: number,
@@ -25,8 +28,8 @@ const workorderContext = createContext<{
 
 const WorkOrderContext = ({ children }: { children: React.ReactNode }) => {
     const [data, setData] = useState<WorkOrderData>(INITIAL_STATE);
-    const valueData = useMemo(() => ({ data, setData }), [data]);
-
+    const valueData = useMemo(() => ({data, setData}), [data]);
+    
     return (
         <workorderContext.Provider value={valueData}>
             {children}
@@ -36,6 +39,7 @@ const WorkOrderContext = ({ children }: { children: React.ReactNode }) => {
 
 const useWorkOrderCreation = () => {
     const { data, setData } = useContext(workorderContext);
+    const router = useRouter();
     
     const setClient = (clientID: number) => {
         setData({...data, clientID});
@@ -48,12 +52,22 @@ const useWorkOrderCreation = () => {
     const addTask = (task: Task) => {
         setData({...data, tasks: [...data.tasks, task]});
     }
+
+    const uploadWorkorder = () => {
+        requests.post("/api/workorders", {...data, tasks: data.tasks.map(t => {
+            return {...t, day: t.day.toISOString()}
+        })}).then(() => {
+            toast.success("Orden de trabajo creada");
+            router.push("/asesor/ordenes-trabajo");
+        });
+    }
     
     return {
         setClient,
         setVehicle,
         tasks: data.tasks,
-        addTask
+        addTask,
+        uploadWorkorder
     }
 }
 

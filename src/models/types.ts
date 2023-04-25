@@ -1,14 +1,22 @@
-export enum State {
-    inprogress = "En Progreso",
-    pending = "Pendiente",
-    finished = "Finalizado"
+export const States = {
+    IN_PROGRESS: "inprogress",
+    PENDING: "pending",
+    FINISHED: "finished"
+} as const;
+
+export const StateValues = {
+    [States.IN_PROGRESS]: "En Progreso",
+    [States.PENDING]: "Pendiente",
+    [States.FINISHED]: "Finalizado"
 }
+
+export type State = typeof States[keyof typeof States];
 
 export const Roles = {
     ADVISER: "adviser",
     TECHNICIAN: "technician",
     CLIENT: "client"
-} as const
+} as const;
 
 export const RoleValues = {
     [Roles.ADVISER]: "Asesor",
@@ -28,7 +36,7 @@ export type Vehicle = {
 export type WorkOrder = {
     id: number,
     vehicle: Vehicle,
-    state: keyof typeof State,
+    state: State,
     entry: string,
     departure: string,
     client: string,
