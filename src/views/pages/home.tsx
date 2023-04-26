@@ -3,6 +3,7 @@ import { Gutter, GutterContainer } from "src/views/components/gutters";
 import WidthLimit from "src/views/layouts/width-limit";
 import Point from "../components/point";
 import { UnsignedLayout } from "../layouts";
+import Link from "next/link";
 
 const Home = () => {
     return (<>
@@ -60,18 +61,21 @@ const Services = () => {
         <section>
             <ServiceCard
                 imageURL="/progress.svg"
-                title="Progreso de Reparación"
+                title="Reparaciones"
                 description="Podrás ver cuál es el progreso de la reparación de tu vehículo y ver las tareas para que conozcas mejor el servicio."
+                link="/cliente"
             />
             <ServiceCard
                 imageURL="/explaining.svg"
-                title="Clientes"
-                description="Funcionalidades para encontrar el taller que se adapte a tus necesidades y seguimiento en tiempo real de tu reparación."
+                title="Tareas"
+                description="Reparaciones de vehículos separadas en tareas individuales para técnicos, con seguimiento de proceso de reparación"
+                link="/tecnico"
             />
             <ServiceCard
                 imageURL="/repairing.svg"
-                title="Talleres"
-                description="Manejar las reparaciones, dividiendolos en tareas para S organización y documentación del proceso."
+                title="Órdenes de trabajo"
+                description="Gestión de las reparaciones de los vehículos de los clientes en órdenes de trabajo con tareas por técnicos."
+                link="/asesor/ordenes-trabajo"
             />
         </section>
         <style jsx>{`
@@ -90,15 +94,17 @@ const Services = () => {
     </>);
 }
 
-const ServiceCard = ({ imageURL, title, description }: {
-    imageURL: string, title: string, description: string
+const ServiceCard = ({ imageURL, title, description, link }: {
+    imageURL: string, title: string, description: string, link: string
 }) => {
     return (<>
-        <article>
-            <img src={imageURL} alt={title}/>
-            <h3><Point/> {title}</h3>
-            <p>{description}</p>
-        </article>
+        <Link href={link}>
+            <article>
+                <img src={imageURL} alt={title}/>
+                <h3><Point/> {title}</h3>
+                <p>{description}</p>
+            </article>
+        </Link>
         <style jsx>{`
             article {
                 background-color: var(--background-2);
@@ -116,6 +122,7 @@ const ServiceCard = ({ imageURL, title, description }: {
 
             h3 {
                 margin: 10px 0;
+                color: var(--font-color-1);
             }
 
             p {
@@ -143,6 +150,7 @@ const Footer = () => {
                 background-color: var(--background-2);
                 padding: 15px;
                 box-sizing: border-box;
+                margin-top: 30px;
             }
 
             h2 {

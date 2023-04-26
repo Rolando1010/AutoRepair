@@ -56,7 +56,7 @@ const saveWorkorder = (advicerID: number, clientID: number, vehicle: Vehicle, ta
                     '${t.name}',
                     '${t.description}',
                     '${t.day.toISOString()}',
-                    ${t.technician.id},
+                    ${t.technician?.id},
                     ${workorderID},
                     ${stateID}
                 );

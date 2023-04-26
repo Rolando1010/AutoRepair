@@ -1,0 +1,1 @@
+export { tasksController as default } from "src/controllers/tasks";

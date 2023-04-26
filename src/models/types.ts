@@ -52,5 +52,6 @@ export type Task = {
     name: string,
     description: string,
     day: Date,
-    technician: User
+    technician?: User,
+    state: State
 };
