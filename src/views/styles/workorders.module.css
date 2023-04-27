@@ -4,60 +4,9 @@
     font-size: 30px;
 }
 
-.workorders a {
-    text-decoration: none;
-    color: var(--font-color-1);
-}
-
-.workorders a:hover li {
-    background-color: var(--background-3);
-}
-
 .workorders{
     list-style: none;
     padding: 0;
-}
-
-.workorders li {
-    background-color: var(--background-2);
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 15px;
-    margin: 10px 0;
-    border-radius: 10px;
-}
-
-.workorders header {
-    display: flex;
-    gap: 10px;
-}
-
-.workorders img {
-    width: 170px;
-}
-
-.workorders div {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.workorders h3, .workorders p, .workorders h4 {
-    margin: 3px 0;
-}
-
-.workorders h4 {
-    font-weight: normal;
-}
-
-.workorders h4 span {
-    color: var(--font-color-2);
-}
-
-@media (max-width: 650px){
-    .workorders li {
-        flex-direction: column;
-    }
 }
 
 .add {

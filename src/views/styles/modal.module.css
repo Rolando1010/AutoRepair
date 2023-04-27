@@ -18,7 +18,7 @@
     flex-direction: column;
 }
 
-.modal header {
+.header {
     color: var(--font-color-1);
     display: flex;
     justify-content: space-between;
@@ -28,7 +28,7 @@
     font-size: 20px;
 }
 
-.modal header button {
+.header button {
     background-color: transparent;
     border-color: transparent;
     cursor: pointer;

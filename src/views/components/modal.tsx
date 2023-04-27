@@ -33,7 +33,7 @@ const Modal = ({ modalRef, title, footer, children }: {
         <div className={styles.modal}>
             <WidthLimit>
                 <section className={styles.dialog}>
-                    <header>
+                    <header className={styles.header}>
                         {title || <p></p>}
                         <button onClick={close}>&times;</button>
                     </header>

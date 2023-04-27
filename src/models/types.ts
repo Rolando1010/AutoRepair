@@ -30,7 +30,8 @@ export type Vehicle = {
     model: string,
     licenseplate: string,
     image: string,
-    year?: number
+    year?: number,
+    owner?: User
 };
 
 export type WorkOrder = {
@@ -39,8 +40,8 @@ export type WorkOrder = {
     state: State,
     entry: string,
     departure: string,
-    client: string,
-    adviser: string
+    adviser: string,
+    client: User
 }
 
 export type User = {
@@ -49,9 +50,11 @@ export type User = {
 }
 
 export type Task = {
+    id: number,
     name: string,
     description: string,
     day: Date,
     technician?: User,
-    state: State
+    state: State,
+    vehicle: Vehicle
 };

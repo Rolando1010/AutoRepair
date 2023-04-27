@@ -3,20 +3,43 @@ import { States, Task, Vehicle, type WorkOrder } from "./types";
 
 const getWorkOrders = () => {
     return new Promise<WorkOrder[]>(resolve => {
-        queryDatabase("SELECT * FROM getWorkOrders")
+        queryDatabase(`
+            SELECT
+                wo.id,
+                v.image as vehicle_image,
+                v.model,
+                v.licenseplate,
+                s.name as state,
+                wo.entrydate,
+                wo.departuredate,
+                client.id as clientid,
+                client.name as clientname,
+                adviser.name as creator
+            FROM
+                WorkOrders wo JOIN
+                Vehicles v ON wo.vehicleid = v.id JOIN
+                States s ON wo.stateid = s.id JOIN
+                Users client ON wo.clientid = client.id JOIN
+                Users adviser ON wo.advisercreatorid = adviser.id
+    `)
         .then(({ rows }) => {
             resolve(rows.map(row => {
+                const client = {
+                    id: row.clientid,
+                    name: row.clientname
+                };
                 return {
                     id: row.id,
                     vehicle: {
                         image: row.vehicle_image,
                         model: row.model,
-                        licenseplate: row.licenseplate
+                        licenseplate: row.licenseplate,
+                        owner: client
                     },
                     state: row.state,
                     entry: row.entrydate.toLocaleDateString(),
                     departure: row.departuredate ? row.departuredate.toLocaleDateString() : "Ahora",
-                    client: row.client,
+                    client,
                     adviser: row.creator
                 }
             }));

@@ -1,0 +1,50 @@
+.listelement {
+    text-decoration: none;
+    color: var(--font-color-1);
+}
+
+.listelement:hover li {
+    background-color: var(--background-3);
+}
+
+.listelement li {
+    background-color: var(--background-2);
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+}
+
+.listelement header {
+    display: flex;
+    gap: 10px;
+}
+
+.listelement img {
+    width: 170px;
+}
+
+.listelement div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.listelement h3, .listelement p, .listelement h4 {
+    margin: 3px 0;
+}
+
+.listelement h4 {
+    font-weight: normal;
+}
+
+.listelement h4 span {
+    color: var(--font-color-2);
+}
+
+@media (max-width: 650px){
+    .listelement li {
+        flex-direction: column;
+    }
+}

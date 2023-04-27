@@ -2,11 +2,11 @@ const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "
 const months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
 const getMonthAmountDays = (month: number, year: number) => {
-    return new Date(year, month + 1, 0).getDate();
+    return new Date(year, month, 0).getDate();
 }
 
 const getDateDay = (day: number, month: number, year: number) => {
-    return new Date(`${month + 1}/${day}/${year}`);
+    return new Date(`${month}/${day}/${year}`);
 }
 
 export {

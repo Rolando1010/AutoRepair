@@ -7,11 +7,11 @@ const useTasks = (month: number, year: number) => {
 
     useEffect(() => {
         requests
-            .get<Task[]>(`/api/tasks?month=${month}&year=${year}`)
-            .then(newTasks => {
-                newTasks.map(task => {
+            .get<{tasks: Task[]}>(`/api/tasks?month=${month}&year=${year}`)
+            .then(response => {
+                setTasks(response.tasks.map(task => {
                     return {...task, day: new Date(task.day)};
-                });
+                }));
             });
     }, [month, year]);
 

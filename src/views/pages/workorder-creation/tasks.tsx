@@ -49,7 +49,7 @@ const TasksList = ({ tasks }: { tasks: Task[] }) => <>
                 <div>
                     <aside>
                         <h3>{t.name}</h3>
-                        <p>{t.technician.name}</p>
+                        <p>{t.technician?.name}</p>
                     </aside>
                     <p>{t.day.toLocaleDateString()}</p>
                 </div>

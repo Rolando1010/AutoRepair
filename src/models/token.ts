@@ -17,7 +17,7 @@ const isTokenValid = (authtoken: string) => {
         const query = `
             SELECT u.id, u.name
             FROM Tokens t, Users u
-            WHERE token = '${authtoken}'
+            WHERE token = '${authtoken}' AND t.userID = u.id
         `;
         queryDatabase(query).then(({ rows, rowCount }) => {
             if(rowCount > 0){
