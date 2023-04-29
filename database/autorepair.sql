@@ -61,6 +61,14 @@ CREATE TABLE Tasks (
     FOREIGN KEY (stateID) REFERENCES States(id)
 );
 
+CREATE TABLE TaskReports (
+    id SERIAL PRIMARY KEY,
+    creation TIMESTAMP WITHOUT TIME ZONE DEFAULT (NOW() AT TIME ZONE 'utc'),
+    description TEXT,
+    taskID INT,
+    FOREIGN KEY (taskID) REFERENCES Tasks(id)
+);
+
 CREATE OR REPLACE PROCEDURE createUser(
     name VARCHAR(100),
     password VARCHAR(100),
@@ -105,29 +113,6 @@ BEGIN
     RETURN QUERY SELECT usertoken;
 END; $$
 LANGUAGE plpgsql;
-
-CREATE VIEW getWorkOrders AS
-SELECT
-    wo.id,
-    v.image as vehicle_image,
-    v.model,
-    v.licenseplate,
-    s.name as state,
-    wo.entrydate,
-    wo.departuredate,
-    client.name as client,
-    adviser.name as creator
-FROM
-    WorkOrders wo,
-    Vehicles v,
-    States s,
-    Users client,
-    Users adviser
-WHERE
-    wo.vehicleid = v.id AND
-    wo.stateid = s.id AND
-    wo.clientid = client.id AND
-    wo.advisercreatorid = adviser.id
 
 CREATE OR REPLACE FUNCTION createVehicle(
     model VARCHAR(100),

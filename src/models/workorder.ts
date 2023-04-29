@@ -1,5 +1,6 @@
 import { connectDatabase, queryDatabase } from "./database";
-import { States, Task, Vehicle, type WorkOrder } from "./types";
+import { getStateID } from "./state";
+import { State, States, Task, Vehicle, type WorkOrder } from "./types";
 
 const getWorkOrders = () => {
     return new Promise<WorkOrder[]>(resolve => {
@@ -66,12 +67,7 @@ const saveWorkorder = (advicerID: number, clientID: number, vehicle: Vehicle, ta
             );`);
             const [{ createworkorder: workorderID }] = workorderRows;
 
-            const { rows: stateRows } = await connection.query(`
-                SELECT id
-                FROM States
-                WHERE name = '${States.PENDING}';
-            `);
-            const [{ id: stateID }] = stateRows;
+            const stateID = await getStateID(States.PENDING);
 
             const insertionTasksQuery = tasks.map(t => `
                 INSERT INTO Tasks(name, description, day, technicianID, workorderID, stateID)
@@ -91,7 +87,16 @@ const saveWorkorder = (advicerID: number, clientID: number, vehicle: Vehicle, ta
     });
 }
 
+const updateWorkOrderState = (workorderID: number, stateID: number) => {
+    return queryDatabase(`
+        UPDATE WorkOrders
+        SET stateID = ${stateID}
+        WHERE id = ${workorderID}
+    `);
+}
+
 export {
     saveWorkorder,
-    getWorkOrders
+    getWorkOrders,
+    updateWorkOrderState
 }

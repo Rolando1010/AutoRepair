@@ -1,12 +1,12 @@
 import { createUser, getUserByRoles } from "src/models/user";
 import { setAuthToken, isAPIAuthenticated } from "./auth"
 import { NextContext } from "./types";
-import { parseBody } from "next/dist/server/api-utils/node";
 import { getUserToken } from "src/models/token";
 import { Roles } from "src/models/types";
+import { getBody } from "./utils";
 
 const loginController = async ({ req: request, res: response }: NextContext) => {
-    const { name, password } = await parseBody(request, "1mb");
+    const { name, password } = await getBody(request);
     try {
         const token = await getUserToken(name, password);
         setAuthToken(token, request, response);

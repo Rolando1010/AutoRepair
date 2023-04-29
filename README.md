@@ -17,3 +17,4 @@ npm run dev
 * Pasar rawquerys a views
 * Fotos de personas
 * Sacar utils de views
+* Falta pantalla de orden de trabajo, poner allí tareas y reportes
