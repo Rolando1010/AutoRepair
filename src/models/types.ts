@@ -47,7 +47,8 @@ export type WorkOrder = {
 
 export type User = {
     id: number,
-    name: string
+    name: string,
+    role?: Role
 }
 
 export type Task = {

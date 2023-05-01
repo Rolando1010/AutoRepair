@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { getCookie, setCookie } from "cookies-next";
+import { getCookie, setCookie, deleteCookie } from "cookies-next";
 import { isTokenValid } from "src/models/token";
 import { NextContext } from "./types";
 import { type User } from "src/models/types";
@@ -14,10 +14,13 @@ const setAuthToken = (token: string, request: NextApiRequest, response: NextApiR
     setCookie(AUTH_TOKEN_COOKIE_NAME, token, {req: request, res: response});
 }
 
+const removeAuthToken = (request: NextApiRequest, response: NextApiResponse) => {
+    deleteCookie(AUTH_TOKEN_COOKIE_NAME, {req: request, res: response});
+}
+
 const validateToken = async (request: NextApiRequest) => {
     const authtoken = getAuthtoken(request);
-    const tokenvalid = await isTokenValid(authtoken);
-    return tokenvalid;
+    return await isTokenValid(authtoken);
 }
 
 const isViewAuthenticated = (
@@ -39,6 +42,7 @@ const isAPIAuthenticated = (
 
 export {
     setAuthToken,
+    removeAuthToken,
     isViewAuthenticated,
     isAPIAuthenticated
 }

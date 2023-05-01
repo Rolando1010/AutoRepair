@@ -2,7 +2,6 @@ import { type NextApiRequest, type NextApiResponse } from "next"
 import { type User } from "src/models/types";
 import { createReport, getTechnicianTasks } from "src/models/tasks";
 import { isAPIAuthenticated, isViewAuthenticated } from "./auth";
-import { useState } from "react";
 import { getBody } from "./utils";
 
 const tasksController = isAPIAuthenticated(async(

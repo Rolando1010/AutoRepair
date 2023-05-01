@@ -11,14 +11,17 @@ const Layout = (links: NavbarLink[]) => ({ children }: { children: React.ReactNo
 }
 
 const UnsignedLayout = Layout([{url: "/inicio-sesion", text: "Inicio de Sesión"}]);
-const AdviserLayout = Layout([
+const SignedLayout = (links: NavbarLink[]) => Layout([...links, {
+    url: "/auth/logout", text: "Cerrar Sesión"
+}]);
+const AdviserLayout = SignedLayout([
     {url: "/asesor/ordenes-trabajo", text: "Órdenes de Trabajo"},
     {url: "/asesor/usuarios", text: "Usuarios"}
 ]);
-const TechnicianLayout = Layout([
+const TechnicianLayout = SignedLayout([
     {url: "/tecnico/tareas", text: "Calendario de Tareas"}
 ]);
-const ClientLayout = Layout([
+const ClientLayout = SignedLayout([
     {url: "/cliente/reparaciones", text: "Reparaciones"}
 ]);
 
