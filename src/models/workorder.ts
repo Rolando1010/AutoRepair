@@ -2,7 +2,7 @@ import { connectDatabase, queryDatabase } from "./database";
 import { getStateID } from "./state";
 import { States, Task, Vehicle, type WorkOrder } from "./types";
 
-const getWorkOrders = () => {
+const getWorkOrders = (where: string = "") => {
     return new Promise<WorkOrder[]>(resolve => {
         queryDatabase(`
             SELECT
@@ -22,6 +22,7 @@ const getWorkOrders = () => {
                 States s ON wo.stateid = s.id JOIN
                 Users client ON wo.clientid = client.id JOIN
                 Users adviser ON wo.advisercreatorid = adviser.id
+            ${where}
         `).then(({ rows }) => {
             resolve(rows.map(row => {
                 const client = {

@@ -1,9 +1,9 @@
+import { useRef } from "react";
 import { StateValues, type Task, type WorkOrder } from "src/models/types";
 import VehicleInfo from "../components/vehicle-info";
 import Point from "../components/point";
 import Button from "../components/button";
 import Modal, { getInititalModalRef } from "../components/modal";
-import { useRef } from "react";
 
 const WorkOrderDetail = ({ workorder }: { workorder: WorkOrder }) => {
     return (<>

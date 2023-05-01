@@ -63,7 +63,7 @@ const Services = () => {
                 imageURL="/progress.svg"
                 title="Reparaciones"
                 description="Podrás ver cuál es el progreso de la reparación de tu vehículo y ver las tareas para que conozcas mejor el servicio."
-                link="/cliente"
+                link="/cliente/reparaciones"
             />
             <ServiceCard
                 imageURL="/explaining.svg"

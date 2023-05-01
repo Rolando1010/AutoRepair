@@ -18,9 +18,13 @@ const AdviserLayout = Layout([
 const TechnicianLayout = Layout([
     {url: "/tecnico/tareas", text: "Calendario de Tareas"}
 ]);
+const ClientLayout = Layout([
+    {url: "/cliente/reparaciones", text: "Reparaciones"}
+]);
 
 export {
     UnsignedLayout,
     AdviserLayout,
-    TechnicianLayout
+    TechnicianLayout,
+    ClientLayout
 };
