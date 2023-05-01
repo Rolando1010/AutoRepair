@@ -1,6 +1,6 @@
 import { connectDatabase, queryDatabase } from "./database";
 import { getStateID } from "./state";
-import { State, States, Task, Vehicle, type WorkOrder } from "./types";
+import { States, Task, Vehicle, type WorkOrder } from "./types";
 
 const getWorkOrders = () => {
     return new Promise<WorkOrder[]>(resolve => {
@@ -22,8 +22,7 @@ const getWorkOrders = () => {
                 States s ON wo.stateid = s.id JOIN
                 Users client ON wo.clientid = client.id JOIN
                 Users adviser ON wo.advisercreatorid = adviser.id
-    `)
-        .then(({ rows }) => {
+        `).then(({ rows }) => {
             resolve(rows.map(row => {
                 const client = {
                     id: row.clientid,
@@ -95,8 +94,96 @@ const updateWorkOrderState = (workorderID: number, stateID: number) => {
     `);
 }
 
+const getWorkOrder = (workorderID: number) => {
+    return new Promise<WorkOrder>(resolve => {
+        connectDatabase(async connection => {
+            const { rows: [ workorderRow ] }= await connection.query(`
+                SELECT
+                    wo.id,
+                    v.image as vehicle_image,
+                    v.model,
+                    v.licenseplate,
+                    s.name as state,
+                    wo.entrydate,
+                    wo.departuredate,
+                    client.id as clientid,
+                    client.name as clientname,
+                    adviser.name as creator
+                FROM
+                    WorkOrders wo JOIN
+                    Vehicles v ON wo.vehicleid = v.id JOIN
+                    States s ON wo.stateid = s.id JOIN
+                    Users client ON wo.clientid = client.id JOIN
+                    Users adviser ON wo.advisercreatorid = adviser.id
+                WHERE wo.id = ${workorderID}
+            `);
+            const client = {
+                id: workorderRow.clientid,
+                name: workorderRow.clientname
+            };
+            const vehicle = {
+                image: workorderRow.vehicle_image,
+                model: workorderRow.model,
+                licenseplate: workorderRow.licenseplate,
+                owner: client
+            };
+            const {rows: tasksRows } = await connection.query(`
+                SELECT
+                    t.id, t.name, t.description, t.day, s.name as state
+                FROM
+                    Tasks t JOIN
+                    WorkOrders wo ON t.workorderID = wo.id JOIN
+                    States s ON t.stateID = s.id
+                WHERE wo.id = ${workorderID}
+            `);
+            let tasksReports: any = {};
+            if(tasksRows.length){
+                const {rows: tasksReportsRows } = await connection.query(`
+                    SELECT id, creation, description, taskID
+                    FROM TaskReports
+                    WHERE taskID IN (${tasksRows.map(task => task.id).join(",")});
+                `);
+                tasksReports = tasksReportsRows.reduce((acc, el) => {
+                    const newTaskReport = {
+                        id: el.id,
+                        creation: el.creation.toISOString(),
+                        description: el.description
+                    };
+                    if(acc[el.taskid]){
+                        acc[el.taskid].push(newTaskReport);
+                    } else {
+                        acc[el.taskid] = [newTaskReport];
+                    }
+                    return acc;
+                }, {});
+            }
+            connection.end();
+            const tasks: Task[] = tasksRows.map(task  => ({
+                id: task.id,
+                name: task.name,
+                description: task.description,
+                day: task.day.toISOString(),
+                state: task.state,
+                vehicle,
+                reports: tasksReports[task.id] ?? null
+            }));
+            return resolve({
+                id: workorderRow.id,
+                vehicle,
+                state: workorderRow.state,
+                entry: workorderRow.entrydate.toISOString(),
+                departure: workorderRow.departuredate ? workorderRow.departuredate.toISOString() : "Ahora",
+                client,
+                adviser: workorderRow.creator,
+                tasks
+            });
+        });
+    });
+}
+
 export {
     saveWorkorder,
     getWorkOrders,
-    updateWorkOrderState
+    updateWorkOrderState,
+    getWorkOrder
 }

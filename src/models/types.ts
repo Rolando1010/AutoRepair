@@ -41,7 +41,8 @@ export type WorkOrder = {
     entry: string,
     departure: string,
     adviser: string,
-    client: User
+    client: User,
+    tasks?: Task[]
 }
 
 export type User = {
@@ -56,5 +57,12 @@ export type Task = {
     day: Date,
     technician?: User,
     state: State,
-    vehicle: Vehicle
+    vehicle: Vehicle,
+    reports?: TaskReport[]
 };
+
+export type TaskReport = {
+    id: number,
+    creation: Date,
+    description: string
+}

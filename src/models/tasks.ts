@@ -121,6 +121,7 @@ const createReport = (taskID: number, state: State, description: string) => {
                     return resolve();
                 }
             }
+            connection.end();
             return resolve();
         });
     });
