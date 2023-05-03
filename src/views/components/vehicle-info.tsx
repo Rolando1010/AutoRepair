@@ -1,3 +1,5 @@
+import { Vehicle } from "src/models/types";
+
 const VehicleInfo = ({ vehicle }: {vehicle: Vehicle}) => {
     return (<>
         <div>
