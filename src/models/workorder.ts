@@ -23,6 +23,7 @@ const getWorkOrders = (where: string = "") => {
                 Users client ON wo.clientid = client.id JOIN
                 Users adviser ON wo.advisercreatorid = adviser.id
             ${where}
+            ORDER BY wo.entrydate DESC
         `).then(({ rows }) => {
             resolve(rows.map(row => {
                 const client = {
@@ -79,7 +80,7 @@ const saveWorkorder = (advicerID: number, clientID: number, vehicle: Vehicle, ta
                     ${workorderID},
                     ${stateID}
                 );
-            `).join("/n");
+            `).join("");
             await connection.query(insertionTasksQuery);
             await connection.end();
             resolve();

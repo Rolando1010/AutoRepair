@@ -14,5 +14,15 @@ const properties: ToastOptions = {
 
 export { ToastContainer as ToastMessages } from "react-toastify";
 export default {
-    success: (message: string) => toast.success(message, properties)
+    success: (message: string) => toast.success(message, properties),
+	promise: (
+		promise: Promise<any>,
+		loadingMessage: string,
+		successMessage: string,
+		errorMessage: string
+	) => toast.promise(promise, {
+		pending: loadingMessage,
+		success: successMessage,
+		error: errorMessage
+	}, properties)
 };

@@ -20,6 +20,8 @@ const Vehicle = () => {
             <LabelInput
                 label="Foto"
                 type="url"
+                required
+                placeholder="https://vehiculos.com/foto-de-vehiculo.png"
                 onChange={event => setVehicle("image", event.target.value)}
             />
             <LabelInput

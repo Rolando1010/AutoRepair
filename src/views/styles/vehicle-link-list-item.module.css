@@ -21,6 +21,11 @@
     gap: 10px;
 }
 
+.listelement aside {
+    display: flex;
+    align-items: center;
+}
+
 .listelement img {
     width: 170px;
 }

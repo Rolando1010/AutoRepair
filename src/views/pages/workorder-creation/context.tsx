@@ -54,10 +54,16 @@ const useWorkOrderCreation = () => {
     }
 
     const uploadWorkorder = () => {
-        requests.post("/api/workorders", {...data, tasks: data.tasks.map(t => {
+        const workorderUpload = requests.post("/api/workorders", {...data, tasks: data.tasks.map(t => {
             return {...t, day: t.day.toISOString()}
-        })}).then(() => {
-            toast.success("Orden de trabajo creada");
+        })})
+        toast.promise(
+            workorderUpload,
+            "Guardando orden de trabajo, por favor espera.",
+            "Orden de trabajo guardada",
+            "Error guardando orden de trabajo"
+        )
+        workorderUpload.then(() => {
             router.push("/asesor/ordenes-trabajo");
         });
     }
