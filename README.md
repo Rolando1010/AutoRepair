@@ -17,3 +17,5 @@ npm run dev
 * Pasar rawquerys a views
 * Fotos de personas
 * Sacar utils de views
+
+# [Pruebas de usabilidad](https://github.com/Rolando1010/AutoRepair/blob/main/Pruebas-Usabilidad-Jose-Rolando.pdf)
